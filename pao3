@@ -1,0 +1,108 @@
+from datetime import datetime
+import os    
+import sys
+import time
+import pickle
+Reservas = []
+nome_arquivo = "reservas.pkl"
+
+disponivel = {"Standard": 10, "Premium": 5, "Luxo": 3}
+total_reservas = soma_valores = maior_valor = maior_dias = 0
+resp_maior_valor = resp_maior_duracao = ""
+
+
+def Carregar_Reservas():
+    try:
+        with open (nome_arquivo,"rb") as f:
+            return pickle.load(f)
+    except FileExistsError:
+        return{}
+def Salvar_Reservas ():
+    global Reservas
+    with open(nome_arquivo, "wb") as f:
+        pickle.dump (Reservas, f)
+def main():
+    global Reservas
+    Reservas = Carregar_Reservas("dados.pk")
+
+
+def mostrar_menu():
+    print("1 - Cadastrar nova reserva")
+    print("2 - Colsultar Reservas")
+    print("3 - Cancelar reservas")
+    print("4 - Listar todas as reservas")
+    print("5 - Exibir estatìsticas gerais")
+    print("6 - Sair do Menu Principal")
+
+def main():
+    while (True):
+        mostrar_menu()
+        opcao=int(input("Digite a opção desejada:"))
+        if opcao== 1:
+            Cadastrar_Reserva()
+        elif opcao == 2:
+            Consultar_Reservas()
+        elif opcao == 3:
+            Cancelar_reservas()
+        elif opcao == 4:
+            Listar_reservas()
+        elif opcao == 5:
+            Exibir_estatisticas()
+        elif opcao== 6:
+            print("Saindo..")
+            break
+        time.sleep(3)
+        os.system("clear")
+           
+
+def Cadastrar_Reserva ():
+    print('Ok, Vamos Cadastrar sua Reserva!')
+    while True:
+        nome = input("\nNome do responsável: ")
+        if not nome:
+                print("Nome inválido.")
+        break
+    while True:
+        try:
+            Checkin = datetime.strptime(input("Check-in (dd/mm/aaaa): "), "%d/%m/%Y")
+        except ValueError:
+            print('Data de Checkin inválida.')
+            continue
+        try:
+            Checkout = datetime.strptime(input("Check-out (dd/mm/aaaa): "), "%d/%m/%Y")
+        except ValueError:
+            print('Data de Checkout inválida.')
+            continue
+        if Checkout <= Checkin: 
+            print("Check-out inválido."); 
+            continue
+        tipo_de_Quarto = input("Tipo de quarto (Standard, Premium, Luxo): ")
+        if tipo_de_Quarto not in disponivel:
+            print("Tipo de Quarto inválido."); 
+            continue
+        try:
+            quantidade_de_Quartos = disponivel
+            if quantidade_de_Quartos <= 0 or quantidade_de_Quartos > disponivel[tipo_de_Quarto]:
+                print("Quantidade inválida ou indisponível."); 
+                continue
+        except ValueError: 
+            print("Valor inválido.");
+        continue
+
+        dias = (Checkout - Checkin).days
+        diaria = {"Standard": 100, "Premium": 180, "Luxo": 250}[tipo_de_Quarto]
+        total = diaria * dias * quantidade_de_Quartos
+
+     
+def Consultar_Reservas():
+    print('Carregando..')
+
+def Cancelar_reservas():
+    print("Ok,Espere")
+def Listar_reservas():
+    print('Ok, vamos listar')
+def Exibir_estatisticas():
+    print('Ok, vamnos exibir as estatisticas')
+
+main()
+
