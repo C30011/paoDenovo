@@ -56,11 +56,12 @@ def main():
            
 
 def Cadastrar_Reserva ():
-    print('Ok, Vamos Cadastrar sua Reserva!')
+    print('\nOk, Vamos Cadastrar sua Reserva!')
     while True:
         nome = input("\nNome do responsável: ")
         if not nome:
-                print("Nome inválido.")
+            print("Nome inválido.")
+            continue
         break
     while True:
         try:
@@ -81,17 +82,27 @@ def Cadastrar_Reserva ():
             print("Tipo de Quarto inválido."); 
             continue
         try:
-            quantidade_de_Quartos = disponivel
+            quantidade_de_Quartos = int(input('Digite a quantidade de quartos que deseja:'))
             if quantidade_de_Quartos <= 0 or quantidade_de_Quartos > disponivel[tipo_de_Quarto]:
-                print("Quantidade inválida ou indisponível."); 
+                print("Quantidade inválida ou indisponível.")
                 continue
         except ValueError: 
             print("Valor inválido.");
-        continue
-
+            continue
+        print('Ok, Reserva Concluida!')
         dias = (Checkout - Checkin).days
-        diaria = {"Standard": 100, "Premium": 180, "Luxo": 250}[tipo_de_Quarto]
-        total = diaria * dias * quantidade_de_Quartos
+        Preco_Diaria = {"Standard": 100, "Premium": 180, "Luxo": 250}[tipo_de_Quarto]
+        total = Preco_Diaria * dias * quantidade_de_Quartos
+        Nova_Reserva = {"Nome":nome,
+                        "Checkin":Checkin,
+                        "Checkout":Checkout,
+                        "Tipo_do_Quarto": tipo_de_Quarto,
+                        "Quantidade_de_Quartos": quantidade_de_Quartos,
+                        "Dias": dias,
+                        "Preco_Diaria": Preco_Diaria,
+                        "Preco_da_reserva":total}
+        Reservas.append(Nova_Reserva)
+        break
 
      
 def Consultar_Reservas():
@@ -99,10 +110,12 @@ def Consultar_Reservas():
 
 def Cancelar_reservas():
     print("Ok,Espere")
+
 def Listar_reservas():
     print('Ok, vamos listar')
+
 def Exibir_estatisticas():
-    print('Ok, vamnos exibir as estatisticas')
-
+    print(f'Ok, vamos exibir as estatisticas: {Reservas}')
+    time.sleep(4)
+    os.system("clear")
 main()
-
