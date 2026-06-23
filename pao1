@@ -1,8 +1,1 @@
 
-num_inicial = int(input("Digite o num inicial:"))
-quantidade = int(input("Digite a quantidade:"))
-variavel = int(input("Digite a variavel:"))
-variavel = variavel * -1
-num_2 = num_inicial + (quantidade * variavel)
-for x in range(num_inicial, num_2, variavel):
-    print(x)
